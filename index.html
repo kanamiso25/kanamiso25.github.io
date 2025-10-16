@@ -1,58 +1,169 @@
 <!doctype html>
-</div>
-</section>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>シンプルHTMLファイル — サンプルページ</title>
+  <meta name="description" content="シンプルで使いやすい1ファイルHTMLサンプル（レスポンシブ・ダークモード・フォーム検証）" />
+  <style>
+    :root{
+      --bg: #f7f7fb; --card: #ffffff; --text: #111827; --muted:#6b7280; --accent:#2563eb;
+    }
+    [data-theme="dark"]{ --bg:#0b1220; --card:#0f1724; --text:#e6eef9; --muted:#9aa6bd; --accent:#60a5fa }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:var(--bg); color:var(--text);}
+    .container{max-width:1000px;margin:32px auto;padding:24px}
 
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7dd3fc);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    nav a{margin-left:12px;color:var(--muted);text-decoration:none}
+    nav a:hover{color:var(--text)}
 
-<footer>
-© <span id="year"></span> La Belle Table • Crafted with care
-</footer>
-</div>
+    .hero{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;margin-top:28px}
+    .hero-card{background:var(--card);padding:28px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.06)}
+    h1{margin:0 0 8px 0;font-size:28px}
+    p.lead{margin:0;color:var(--muted)}
 
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px}
+    .feature{background:var(--card);padding:18px;border-radius:12px}
+    .buttons{display:flex;gap:10px;margin-top:14px}
+    button{background:var(--accent);color:white;border:0;padding:10px 14px;border-radius:8px;cursor:pointer}
+    button.secondary{background:transparent;color:var(--accent);border:1px solid rgba(0,0,0,0.06)}
 
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
+    footer{margin-top:28px;color:var(--muted);font-size:14px;text-align:center}
 
+    /* form */
+    form{display:flex;flex-direction:column;gap:10px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid #d1d5db;background:transparent;color:var(--text)}
+    input:focus,textarea:focus{outline:2px solid rgba(37,99,235,0.12);border-color:var(--accent)}
 
-// テーマ切替
-const saved = localStorage.getItem('theme');
-if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
-const toggle = document.getElementById('themeToggle');
-toggle.addEventListener('click', ()=>{
-const current = document.documentElement.getAttribute('data-theme');
-if(current === 'dark'){
-document.documentElement.removeAttribute('data-theme');
-localStorage.setItem('theme','light');
-toggle.textContent = 'ダーク';
-} else {
-document.documentElement.setAttribute('data-theme','dark');
-localStorage.setItem('theme','dark');
-toggle.textContent = 'ライト';
-}
-});
+    .row{display:flex;gap:8px}
+    @media(min-width:780px){
+      .hero{grid-template-columns:1fr 360px}
+      h1{font-size:34px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="page">
+    <header>
+      <div class="brand">
+        <div class="logo">SP</div>
+        <div>
+          <div style="font-weight:700">Simple Page</div>
+          <div style="font-size:12px;color:var(--muted)">HTML single-file sample</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#features">特徴</a>
+        <a href="#gallery">ギャラリー</a>
+        <a href="#contact">お問い合わせ</a>
+        <button id="themeToggle" style="margin-left:12px;padding:8px 10px;border-radius:8px;background:transparent;border:1px solid rgba(0,0,0,0.06);cursor:pointer">ダーク</button>
+      </nav>
+    </header>
 
+    <section class="hero">
+      <div class="hero-card">
+        <h1>シンプルで再利用できるHTMLテンプレート</h1>
+        <p class="lead">レスポンシブ対応、ダークモード切替、簡易フォーム検証付きのワンファイルサンプルです。自由に編集して使ってください。</p>
 
-function scrollToReserve(){
-document.getElementById('reserve').scrollIntoView({behavior:'smooth'});
-}
+        <div class="grid" id="features">
+          <div class="feature">
+            <h3>レスポンシブ</h3>
+            <p style="margin:6px 0;color:var(--muted)">モバイルからデスクトップまでレイアウトが自動調整されます。</p>
+          </div>
+          <div class="feature">
+            <h3>ダークモード</h3>
+            <p style="margin:6px 0;color:var(--muted)">ボタン一つで色テーマを切り替えられます（保存機能あり）。</p>
+          </div>
+          <div class="feature">
+            <h3>軽量</h3>
+            <p style="margin:6px 0;color:var(--muted)">外部ライブラリ不要。1ファイルだけで動きます。</p>
+          </div>
+        </div>
 
+        <div class="buttons">
+          <button onclick="window.scrollTo({top:document.getElementById('contact').offsetTop, behavior:'smooth'})">お問い合わせ</button>
+          <button class="secondary" onclick="downloadHTML()">HTMLをダウンロード</button>
+        </div>
+      </div>
 
-function handleReserve(e){
-e.preventDefault();
-const name = document.getElementById('rname').value.trim();
-const phone = document.getElementById('rphone').value.trim();
-const date = document.getElementById('rdate').value;
-if(!name || !phone || !date){ alert('全て入力してください'); return; }
-document.getElementById('reserveResult').textContent = 'ご予約リクエストを受け付けました（デモ）。店舗から確認の連絡を差し上げます。';
-e.target.reset();
-setTimeout(()=>document.getElementById('reserveResult').textContent = '',5000);
-}
+      <aside class="hero-card" style="display:flex;flex-direction:column;gap:12px">
+        <h3 style="margin:0">お問い合わせフォーム</h3>
+        <form id="contact" onsubmit="handleSubmit(event)">
+          <input id="name" type="text" placeholder="お名前" required />
+          <input id="email" type="email" placeholder="メールアドレス" required />
+          <textarea id="message" rows="5" placeholder="ご用件（簡単でOK）" required></textarea>
+          <div style="display:flex;justify-content:space-between;align-items:center"> 
+            <small style="color:var(--muted)">簡易検証のみ(ダミー送信)</small>
+            <button type="submit">送信</button>
+          </div>
+        </form>
+        <div id="formResult" style="color:var(--accent);font-weight:600"></div>
+      </aside>
+    </section>
 
+    <section style="margin-top:22px">
+      <h2 id="gallery">ギャラリー</h2>
+      <div class="grid" style="margin-top:10px">
+        <div class="feature">画像やプロジェクトのサムネイルをここに置けます</div>
+        <div class="feature">カスタムコンポーネントや紹介文を追加</div>
+        <div class="feature">リンクやボタンも自由に配置</div>
+      </div>
+    </section>
 
-function downloadHTML(){
-const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a'); a.href = url; a.download = 'la-belle-table.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-}
-</script>
+    <footer>
+      © <span id="year"></span> Simple Page — これはサンプルです
+    </footer>
+  </div>
+
+  <script>
+    // 初期年表示
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ダークテーマの保持
+    const page = document.documentElement;
+    const saved = localStorage.getItem('theme');
+    if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+
+    document.getElementById('themeToggle').addEventListener('click', ()=>{
+      const current = document.documentElement.getAttribute('data-theme');
+      if(current === 'dark'){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme','light');
+        document.getElementById('themeToggle').textContent = 'ダーク';
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+        document.getElementById('themeToggle').textContent = 'ライト';
+      }
+    });
+
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      if(!name || !email || !msg){
+        alert('全ての項目を入力してください');
+        return;
+      }
+      // ここでは実際の送信はしない（デモ）
+      document.getElementById('formResult').textContent = '送信ありがとうございました！(デモ)';
+      e.target.reset();
+      setTimeout(()=>document.getElementById('formResult').textContent = '', 4000);
+    }
+
+    // ブラウザでこのHTMLをダウンロードする小さなヘルパー
+    function downloadHTML(){
+      const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'simple-page.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
