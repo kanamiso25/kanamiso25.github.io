@@ -1,24 +1,70 @@
-<!DOCTYPE html>
-<html lang="ja">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
-  <title lang="en">Today is rainy</title>
- </head>
- <body>
-  <article>
-   <h1 lang="en">Today is rainy</h1>
-   <p>HTMLは、<a href="http://ja.wikipedia.org/wiki/SGML">SGML</a>
-      アプリケーションの一つで、ハイパーテキストを利用してワールド
-      ワイドウェブ上で情報を発信するために作られ、
-      ワールドワイドウェブの<strong>基幹的役割</strong>をなしている。
-      情報を発信するための文書構造を定義するために使われ、
-      ある程度機械が理解可能な言語で、
-      写真の埋め込みや、フォームの作成、
-      ハイパーテキストによるHTML間の連携が可能である。</p>
-  </article>
- </body>
+<!doctype html>
+</section>
 
+
+<section style="margin-top:22px">
+<h2 id="gallery">ギャラリー</h2>
+<div class="grid" style="margin-top:10px">
+<div class="feature">🍣 お寿司 — 新鮮なネタが自慢</div>
+<div class="feature">🍝 パスタ — イタリアの定番家庭料理</div>
+<div class="feature">🍰 ケーキ — 見た目も味も幸せなデザート</div>
+</div>
+</section>
+
+
+<footer>
+© <span id="year"></span> おいしい食べ物 — フードページサンプル
+</footer>
+</div>
+
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+
+const saved = localStorage.getItem('theme');
+if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
+
+
+document.getElementById('themeToggle').addEventListener('click', ()=>{
+const current = document.documentElement.getAttribute('data-theme');
+if(current === 'dark'){
+document.documentElement.removeAttribute('data-theme');
+localStorage.setItem('theme','light');
+document.getElementById('themeToggle').textContent = 'ダーク';
+} else {
+document.documentElement.setAttribute('data-theme','dark');
+localStorage.setItem('theme','dark');
+document.getElementById('themeToggle').textContent = 'ライト';
+}
+});
+
+
+function handleSubmit(e){
+e.preventDefault();
+const name = document.getElementById('name').value.trim();
+const email = document.getElementById('email').value.trim();
+const msg = document.getElementById('message').value.trim();
+if(!name || !email || !msg){
+alert('全ての項目を入力してください');
+return;
+}
+document.getElementById('formResult').textContent = '送信ありがとうございました！(デモ)';
+e.target.reset();
+setTimeout(()=>document.getElementById('formResult').textContent = '', 4000);
+}
+
+
+function downloadHTML(){
+const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url; a.download = 'food-page.html';
+document.body.appendChild(a); a.click(); a.remove();
+URL.revokeObjectURL(url);
+}
+</script>
+</body>
 </html>
 
 
