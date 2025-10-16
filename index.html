@@ -1,19 +1,10 @@
 <!doctype html>
-</section>
-
-
-<section style="margin-top:22px">
-<h2 id="gallery">Foods</h2>
-<div class="grid" style="margin-top:10px">
-<div class="feature">🍣 お寿司 — 新鮮なネタが自慢</div>
-<div class="feature">🍝 パスタ — イタリアの定番家庭料理</div>
-<div class="feature">🍰 ケーキ — 見た目も味も幸せなデザート</div>
 </div>
 </section>
 
 
 <footer>
-© <span id="year"></span> おいしい食べ物 — フードページサンプル
+© <span id="year"></span> La Belle Table • Crafted with care
 </footer>
 </div>
 
@@ -22,50 +13,46 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
 
+// テーマ切替
 const saved = localStorage.getItem('theme');
 if(saved === 'dark') document.documentElement.setAttribute('data-theme','dark');
-
-
-document.getElementById('themeToggle').addEventListener('click', ()=>{
+const toggle = document.getElementById('themeToggle');
+toggle.addEventListener('click', ()=>{
 const current = document.documentElement.getAttribute('data-theme');
 if(current === 'dark'){
 document.documentElement.removeAttribute('data-theme');
 localStorage.setItem('theme','light');
-document.getElementById('themeToggle').textContent = 'ダーク';
+toggle.textContent = 'ダーク';
 } else {
 document.documentElement.setAttribute('data-theme','dark');
 localStorage.setItem('theme','dark');
-document.getElementById('themeToggle').textContent = 'ライト';
+toggle.textContent = 'ライト';
 }
 });
 
 
-function handleSubmit(e){
-e.preventDefault();
-const name = document.getElementById('name').value.trim();
-const email = document.getElementById('email').value.trim();
-const msg = document.getElementById('message').value.trim();
-if(!name || !email || !msg){
-alert('全ての項目を入力してください');
-return;
+function scrollToReserve(){
+document.getElementById('reserve').scrollIntoView({behavior:'smooth'});
 }
-document.getElementById('formResult').textContent = '送信ありがとうございました！(デモ)';
+
+
+function handleReserve(e){
+e.preventDefault();
+const name = document.getElementById('rname').value.trim();
+const phone = document.getElementById('rphone').value.trim();
+const date = document.getElementById('rdate').value;
+if(!name || !phone || !date){ alert('全て入力してください'); return; }
+document.getElementById('reserveResult').textContent = 'ご予約リクエストを受け付けました（デモ）。店舗から確認の連絡を差し上げます。';
 e.target.reset();
-setTimeout(()=>document.getElementById('formResult').textContent = '', 4000);
+setTimeout(()=>document.getElementById('reserveResult').textContent = '',5000);
 }
 
 
 function downloadHTML(){
 const blob = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
 const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url; a.download = 'food-page.html';
-document.body.appendChild(a); a.click(); a.remove();
-URL.revokeObjectURL(url);
+const a = document.createElement('a'); a.href = url; a.download = 'la-belle-table.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
 </script>
 </body>
 </html>
-
-
-
